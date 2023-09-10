@@ -30,7 +30,7 @@ export const duel: Command = async (channel, chatUser, args) => {
   }
 
   if (command === "reject") {
-    client.say(channel, rejectDuel(chatUser.username, initiatorName));
+    rejectDuel(chatUser.username, initiatorName);
   }
 };
 
@@ -63,14 +63,21 @@ const acceptDuel = (recieverName: string, initiatorName: string) => {
   if (rnd > 0.5) {
     users.get(duel.recieverId).balance -= duel.bet;
     users.get(duel.initiatorId).balance += duel.bet;
+    duels.delete(duelId);
 
     return `@${initiatorName} won @${recieverName} and got ${duel.bet} coins`;
   }
 
   users.get(duel.recieverId).balance += duel.bet;
   users.get(duel.initiatorId).balance -= duel.bet;
+  duels.delete(duelId);
 
   return `@${initiatorName} lost to @${recieverName} and lost ${duel.bet} coins LUL`;
 };
 
-const rejectDuel = (recieverName: string, initiatorName: string) => {};
+const rejectDuel = (recieverName: string, initiatorName: string) => {
+  const duelId = initiatorName + "+" + recieverName;
+  if (!duels.has(duelId)) return "";
+
+  duels.delete(duelId);
+};
