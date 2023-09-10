@@ -1,56 +1,76 @@
-import { duels } from "../db";
+import { duels, users } from "../db";
 import { client } from "../main";
-import { createUser, getUser, getIdByUsername } from "../services/userService";
+import { getUser, getIdByUsername } from "../services/userService";
 import { Command, Duel } from "../types";
 
-// !duel @username bet
-//
 export const duel: Command = async (channel, chatUser, args) => {
-  const options = args.split(" ");
-
+  const options = args.trim().split(" ");
   const command = options[0];
 
+  if (options.length < 2) return;
+
   if (command.startsWith("@")) {
-    client.say(channel, await createDuel(chatUser.username, chatUser["user-id"], args));
+    const bet = +options[1];
+
+    client.say(
+      channel,
+      await createDuel(
+        chatUser.username,
+        chatUser["user-id"],
+        command.replace("@", ""),
+        bet,
+      ),
+    );
   }
+
+  const initiatorName = options[1].replace("@", "").trim();
+
   if (command === "accept") {
+    client.say(channel, acceptDuel(chatUser.username, initiatorName));
   }
+
   if (command === "reject") {
-  }
-  if (command === "cancel") {
+    client.say(channel, rejectDuel(chatUser.username, initiatorName));
   }
 };
 
 const createDuel = async (
   initiatorName: string,
   initiatorId: string,
-  args: string,
+  recieverName: string,
+  bet: number,
 ) => {
-  const options = args.split(" ");
-
-  const duelistUsername = options[0].replace("@", "");
-  const bet = +options[1];
-
   const initiator = getUser(initiatorId);
-  const recieverId = await getIdByUsername(duelistUsername);
+  const recieverId = await getIdByUsername(recieverName);
   const reciever = getUser(recieverId);
 
   if (initiator.balance < bet || reciever.balance < bet) return "";
   if (bet < 1) return "";
 
-  const createdDuel: Duel = {
-    initiatorId,
-    recieverId: recieverId,
-    bet,
-  };
-  duels.set(initiatorName, createdDuel);
-  console.log(duels)
+  const createdDuel: Duel = { initiatorId, recieverId, bet };
+  duels.set(initiatorName + "+" + recieverName, createdDuel);
 
-  return `@${duelistUsername}, to accept duel against @${initiatorName} type !duel accept ${123}`;
+  return `@${recieverName} to accept duel against @${initiatorName} type !duel accept @${initiatorName}`;
 };
 
-const acceptDuel = () => {};
+const acceptDuel = (recieverName: string, initiatorName: string) => {
+  const duelId = initiatorName + "+" + recieverName;
+  if (!duels.has(duelId)) return "";
 
-const rejectDuel = () => {};
+  const duel = duels.get(duelId);
+  const rnd = Math.random();
 
-const cancelDuel = () => {};
+  if (rnd > 0.5) {
+    users.get(duel.recieverId).balance -= duel.bet;
+    users.get(duel.initiatorId).balance += duel.bet;
+
+    return `@${initiatorName} won @${recieverName} and got ${duel.bet} coins`;
+  }
+
+  users.get(duel.recieverId).balance += duel.bet;
+  users.get(duel.initiatorId).balance -= duel.bet;
+
+  return `@${initiatorName} lost to @${recieverName} and lost ${duel.bet} coins LUL`;
+};
+
+const rejectDuel = (recieverName: string, initiatorName: string) => {};
