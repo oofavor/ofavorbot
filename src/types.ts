@@ -1,10 +1,17 @@
 import { ChatUserstate } from "tmi.js";
 
-export type Command = (channel: string, userState: ChatUserstate, msg: string) => void
+export type Command = (
+  channel: string,
+  userState: ChatUserstate,
+  args: string,
+) => void;
 
 export interface User {
-    id: string;
-    username: string;
-    balance: string;
+  balance: number;
 }
 
+export interface Duel {
+  initiatorId: string;
+  recieverId: string;
+  bet: number;
+}

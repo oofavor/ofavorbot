@@ -1,5 +1,5 @@
-import { User } from "./types";
+import { Duel, User } from "./types";
 
-export const users = {
-    "[123, 23]": 123
-} 
+export const users: Map<String, User> = new Map();
+
+export const duels: Map<String, Duel> = new Map();
