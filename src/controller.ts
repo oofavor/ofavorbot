@@ -1,14 +1,5 @@
 import { ChatUserstate } from "tmi.js";
-import { dice } from "./commands/dice.js";
-import { duel } from "./commands/duel.js";
-import { debug } from "./commands/debug.js";
-
-const commandList = {
-  "!dice": dice,
-  "!roll": dice,
-  "!duel": duel,
-  "!debug": debug,
-};
+import commands from "./commands/index.js";
 
 export function controller(
   channel: string,
@@ -17,13 +8,14 @@ export function controller(
   self: boolean,
 ) {
   msg = msg.trim();
+
   if (!msg.startsWith("!")) return;
 
-  const command = msg.split(" ")[0];
-  const args = msg.replace(command + " ", "");
+  const command = msg.split(" ")[0].replace("!", "");
+  const args = msg.replace("!" + command + " ", "");
 
-  if (command in commandList) {
-    commandList[command](channel, userState, args);
+  if (command in commands) {
+    commands[command](channel, userState, args);
     console.log(`* Executed command ${command}`);
   } else {
     console.log(`* Unknown command ${command}`);
