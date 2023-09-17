@@ -1,17 +1,18 @@
-import { User } from "../types";
-import { users } from "../db";
+import { User } from "../types.js";
+import { users } from "../db.js";
 
 export const getUser = (userId: string) => {
-  if (!users.has(userId)) return createUser(userId);
+  if (users[userId] === undefined) return createUser(userId);
 
-  return users.get(userId);
+  return users[userId];
 };
+
 export const createUser = (userId: string) => {
-  if (users.has(userId)) return;
+  if (users[userId] !== undefined) return;
 
   const newUser = getNewUser();
 
-  users.set(userId, newUser);
+  users[userId] = newUser;
 
   return newUser;
 };
@@ -33,7 +34,7 @@ export const getIdByUsername = async (username: string) => {
   const data = await res.json();
   const user = data.data[0];
 
-  console.log(`username ${username} ${user.id}`)
+  console.log(`username ${username} ${user.id}`);
 
   return user.id;
 };

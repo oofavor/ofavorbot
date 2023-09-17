@@ -1,7 +1,7 @@
 import { ChatUserstate } from "tmi.js";
-import { dice } from "./commands/dice";
-import { duel } from "./commands/duel";
-import { debug } from "./commands/debug";
+import { dice } from "./commands/dice.js";
+import { duel } from "./commands/duel.js";
+import { debug } from "./commands/debug.js";
 
 const commandList = {
   "!dice": dice,

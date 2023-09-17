@@ -1,14 +1,17 @@
 {
   "dependencies": {
+    "@types/lowdb": "^1.0.12",
     "@types/node": "^20.5.7",
     "@types/tmi.js": "^1.8.3",
     "dotenv": "^16.3.1",
+    "lowdb": "^6.0.1",
     "tmi.js": "^1.8.5",
     "typescript": "*"
   },
   "name": "ofavorbot",
+  "type": "module",
   "version": "1.0.0",
-  "main": "dist/main.js",
+  "exports": "./dist/main.js",
   "repository": "https://github.com/oofavor/ofavorbot",
   "author": "Favor <favorxog@gmail.com>",
   "license": "MIT",

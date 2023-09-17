@@ -1,5 +1,5 @@
 import tmi from "tmi.js";
-import { controller } from "./controller";
+import { controller } from "./controller.js";
 import "dotenv/config";
 
 // Create a client with our options
@@ -27,4 +27,3 @@ client.connect().catch((e) => {
 function onConnectedHandler(addr: string, port: number) {
   console.log(`* Connected to ${addr}:${port}`);
 }
-

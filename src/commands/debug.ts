@@ -1,6 +1,4 @@
-import { getIdByUsername } from "../services/userService";
-import { Command } from "../types";
+import { Command } from "../types.js";
 
-export const debug: Command = (channel, userState, args) => {
-  getIdByUsername(args);
+export const debug: Command= (channel, userState, args) => {
 };
