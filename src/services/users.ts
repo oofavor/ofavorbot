@@ -1,5 +1,6 @@
 import { User } from "../types.js";
 import { users } from "../db.js";
+import axios from "axios";
 
 export const getUser = (userId: string) => {
   if (users[userId] === undefined) return createUser(userId);
@@ -30,11 +31,8 @@ export const getIdByUsername = async (username: string) => {
   };
   const url = `https://api.twitch.tv/helix/users?login=${username}`;
 
-  const res = await fetch(url, { headers });
-  const data = await res.json();
-  const user = data.data[0];
-
-  console.log(`username ${username} ${user.id}`);
+  const res = await axios.get(url, { headers });
+  const user = res.data.data[0];
 
   return user.id;
 };

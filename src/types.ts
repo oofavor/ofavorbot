@@ -24,7 +24,13 @@ export interface DuelDB {
   [key: string]: Duel;
 }
 
+export interface CustomCommand {
+    name: string;
+    content: string;
+}
+
 export interface DB {
   users: UserDB;
   duels: DuelDB;
 }
+

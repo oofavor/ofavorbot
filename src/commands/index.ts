@@ -3,5 +3,6 @@ import { dice } from "./dice.js";
 import { duel } from "./duel.js";
 import { balance } from "./balance.js";
 import { say } from "./say.js";
+import { addcommand } from "./addcommand.js";
 
-export default { debug, dice, duel, balance, say };
+export default { debug, dice, duel, balance, say, addcommand };

@@ -12,7 +12,7 @@ export function controller(
   if (!msg.startsWith("!")) return;
 
   const command = msg.split(" ")[0].replace("!", "");
-  const args = msg.replace("!" + command + " ", "");
+  const args = msg.replace("!" + command + " ", "").trim();
 
   if (command in commands) {
     commands[command](channel, userState, args);
