@@ -8,7 +8,7 @@ const opts: tmi.Options = {
     username: process.env.USERNAME,
     password: process.env.TOKEN,
   },
-  channels: ["ofavor"],
+  channels: ["ofavor", "b0nfir3_"],
 };
 
 export const client = new tmi.client(opts);

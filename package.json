@@ -6,8 +6,10 @@
     "axios": "^1.5.0",
     "dotenv": "^16.3.1",
     "lowdb": "^6.0.1",
+    "moment": "^2.29.4",
     "tmi.js": "^1.8.5",
-    "typescript": "*"
+    "typescript": "*",
+    "unofficial-valorant-api": "^2.3.1-stable.0"
   },
   "name": "ofavorbot",
   "type": "module",

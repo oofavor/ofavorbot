@@ -9,5 +9,4 @@ export const addcommand: Command = (channel, user, args) => {
 
   const commandName = res[0].replace("!", "").trim();
   const commandContent = args.replace(regexp, "");
-
 };

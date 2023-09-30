@@ -1,6 +1,7 @@
 import { User } from "../types.js";
 import { users } from "../db.js";
 import axios from "axios";
+import { getTwitch } from "./utils.js";
 
 export const getUser = (userId: string) => {
   if (users[userId] === undefined) return createUser(userId);
@@ -25,13 +26,9 @@ const getNewUser = (): User => {
 };
 
 export const getIdByUsername = async (username: string) => {
-  const headers = {
-    Authorization: `Bearer ${process.env.TOKEN}`,
-    "Client-Id": process.env.CLIENT_ID,
-  };
   const url = `https://api.twitch.tv/helix/users?login=${username}`;
 
-  const res = await axios.get(url, { headers });
+  const res = await getTwitch(url)
   const user = res.data.data[0];
 
   return user.id;
