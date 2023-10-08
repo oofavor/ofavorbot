@@ -1,5 +1,5 @@
 token:
-	twitch token -u -s 'chat:read chat:edit user:read:follows'
+	twitch token -u -s 'chat:read chat:edit moderator:read:followers' 
 riot-token:
 curl https://auth.riotgames.com/api/v1/authorization
    -H 'X-Custom-Header: value'
